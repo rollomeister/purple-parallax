@@ -1,24 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import heroPortrait from "../assets/images/triin.p_2bw.jpg";
 
-const getYouTubeThumbnail = (url: string) => {
+const getYouTubeEmbed = (url: string) => {
 	try {
 		const parsed = new URL(url);
 		const shortId = parsed.hostname.includes("youtu.be") ? parsed.pathname.slice(1) : null;
 		const watchId = parsed.searchParams.get("v");
 		const id = shortId || watchId;
-		return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
+		return id ? `https://www.youtube.com/embed/${id}` : null;
 	} catch {
 		return null;
 	}
 };
 
-const getVimeoThumbnail = (url: string) => {
+const getVimeoEmbed = (url: string) => {
 	try {
 		const parsed = new URL(url);
 		const match = parsed.pathname.match(/\/(\d+)/);
-		return match ? `https://vumbnail.com/${match[1]}.jpg` : null;
+		return match ? `https://player.vimeo.com/video/${match[1]}` : null;
 	} catch {
 		return null;
 	}
@@ -124,16 +123,16 @@ const rawProjects = [
 ];
 
 const featuredProjects = rawProjects.map((project) => {
-	const image =
+	const embed =
 		project.link.includes("youtube.com") || project.link.includes("youtu.be")
-			? getYouTubeThumbnail(project.link)
+			? getYouTubeEmbed(project.link)
 			: project.link.includes("vimeo.com")
-				? getVimeoThumbnail(project.link)
+				? getVimeoEmbed(project.link)
 				: null;
 
 	return {
 		...project,
-		image,
+		embed,
 	};
 });
 ---
@@ -143,22 +142,22 @@ const featuredProjects = rawProjects.map((project) => {
 	description="Editorial-style portfolio for costume artist Triim Kurbas, featuring film, television, and commercial work."
 >
 	<main class="page">
-		<header class="hero" id="home">
-			<nav class="nav">
-				<a class="brand" href="#home">
-					<span>Triim Kurbas</span>
-				</a>
-				<div class="links">
-					<a href="#home">Home</a>
-					<a href="#work">Costume work</a>
-					<a href="#contact">Contact</a>
-				</div>
-			</nav>
+		<nav class="nav">
+			<a class="brand" href="#home">
+				<span>Triim Kurbas</span>
+			</a>
+			<div class="links">
+				<a href="#home">Home</a>
+				<a href="#work">Costume work</a>
+				<a href="#contact">Contact</a>
+			</div>
+		</nav>
 
+		<header class="hero" id="home">
 			<div class="hero-grid">
 				<div class="hero-copy">
 					<p class="intro">
-						TRIIM KURBAS also known as Triim Peetsalu before 2025 - is a COSTUME DESIGNER working on a TV-series, Film, commercials and photoshoots.
+						TRIIM KURBAS also known as Triim Peetsalu before 2025 - is a COSTUME DESIGNER working on TV-series, Film, commercials and photoshoots.
 					</p>
 					<p class="intro">
 						My background is Estonian Art Academy Jewellry and Production Design. Before costume I was working in jewellery.
@@ -174,9 +173,9 @@ const featuredProjects = rawProjects.map((project) => {
 					<div class="portrait-card">
 						<img
 							class="hero-portrait"
-							src={heroPortrait.src}
-							width={heroPortrait.width}
-							height={heroPortrait.height}
+							src="/triin-portrait.jpg"
+							width="667"
+							height="1000"
 							alt="Portrait of Triim Kurbas"
 							loading="eager"
 						/>
@@ -184,61 +183,6 @@ const featuredProjects = rawProjects.map((project) => {
 				</aside>
 			</div>
 		</header>
-
-		<section class="section story-section">
-			<div class="section-heading">
-				<p class="section-label">Practice</p>
-				<h2>An editorial portfolio shaped from the original project plan.</h2>
-			</div>
-			<div class="story-grid">
-				<article class="story-card large">
-					<p class="story-kicker">Approach</p>
-					<h3>Craft-led costume design with a material eye.</h3>
-					<p>
-						The work spans family television, period film, music video, drama, and
-						international co-productions. Each project is approached through texture,
-						proportion, world-building, and the emotional logic of what a character wears.
-					</p>
-				</article>
-				<article class="story-card">
-					<p class="story-kicker">Commercials</p>
-					<p>
-						Commercial costume work includes projects for Coca-Cola, Sony, Samsung,
-						Expert, DNA, Elisa Eesti, and Eesti Pagar.
-					</p>
-				</article>
-				<article class="story-card">
-					<p class="story-kicker">Background</p>
-					<p>
-						A foundation in jewellery and production design informs a detail-oriented
-						approach to fittings, styling, sourcing, and costume continuity.
-					</p>
-				</article>
-			</div>
-		</section>
-
-		<section class="section feature-section">
-			<div class="feature-frame">
-				<div class="feature-copy">
-					<p class="section-label">Selected Focus</p>
-					<h2>Papsid</h2>
-					<p class="feature-meta">Estonian family TV series, 2022-present</p>
-					<p>
-						Head costume designer across a long-running television project, shaping
-						recurring visual identity over multiple seasons.
-					</p>
-					<a class="text-link" href="https://www.youtube.com/watch?v=MywN9DJHdA8" target="_blank" rel="noreferrer">
-						View trailer
-					</a>
-				</div>
-				<img
-					class="feature-image"
-					src={getYouTubeThumbnail("https://www.youtube.com/watch?v=MywN9DJHdA8")}
-					alt="Papsid trailer still"
-					loading="eager"
-				/>
-			</div>
-		</section>
 
 		<section class="section" id="work">
 			<div class="section-heading section-heading-wide">
@@ -258,12 +202,15 @@ const featuredProjects = rawProjects.map((project) => {
 						<article class:list={["project-card", index % 5 === 0 && "project-card-tall"]}>
 							<div class="project-media">
 								{
-									project.image ? (
-										<img
-											class="project-image"
-											src={project.image}
-											alt={`${project.title} reference still`}
+									project.embed ? (
+										<iframe
+											class="project-video"
+											src={project.embed}
+											title={`${project.title} trailer`}
 											loading="lazy"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+											allowfullscreen
+											referrerpolicy="strict-origin-when-cross-origin"
 										/>
 									) : (
 										<div class="project-image fallback" aria-hidden="true">
@@ -271,13 +218,11 @@ const featuredProjects = rawProjects.map((project) => {
 										</div>
 									)
 								}
-								<div class="project-overlay">
-									<p class="project-kicker">{project.subtitle}</p>
-									<h3>{project.title}</h3>
-								</div>
 							</div>
 
 							<div class="project-body">
+								<p class="project-kicker project-kicker-body">{project.subtitle}</p>
+								<h3>{project.title}</h3>
 								<p class="project-meta">{project.meta}</p>
 								<dl class="project-details">
 									<div>
@@ -349,31 +294,39 @@ const featuredProjects = rawProjects.map((project) => {
 	</main>
 </Layout>
 
-<style>
+<style is:inline>
 	.page {
-		width: min(84rem, calc(100% - 2rem));
+		width: min(100% - 1.25rem, 44rem);
 		margin: 0 auto;
-		padding: 1rem 0 5rem;
+		padding: 0.5rem 0 4rem;
 		position: relative;
 	}
 
 	.hero {
 		position: relative;
-		padding-bottom: 4rem;
-		min-height: 100vh;
+		padding-bottom: 3rem;
+		min-height: auto;
 		display: grid;
 		align-content: start;
 	}
 
 	.nav {
-		position: static;
+		position: sticky;
+		top: 0;
+		z-index: 20;
 		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
 		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		margin-top: 0.5rem;
-		padding: 0.85rem 0;
-		background: transparent;
+		gap: 0.5rem;
+		width: 100vw;
+		margin-top: 0;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+		padding: 0.45rem 0 0.6rem;
+		padding-inline: 0.625rem;
+		background: var(--bg);
+		backdrop-filter: none;
 		box-shadow: none;
 	}
 
@@ -390,7 +343,7 @@ const featuredProjects = rawProjects.map((project) => {
 		align-items: center;
 		gap: 0.85rem;
 		color: #111111;
-		font-size: 0.9rem;
+		font-size: 1.35rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
@@ -412,12 +365,12 @@ const featuredProjects = rawProjects.map((project) => {
 	.links {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 1.25rem;
+		gap: 0.75rem;
 	}
 
 	.links a {
 		color: rgba(17, 17, 17, 0.76);
-		font-size: 0.82rem;
+		font-size: 0.76rem;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
@@ -429,10 +382,10 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.8fr);
-		gap: 2rem;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
 		align-items: center;
-		padding-top: 4rem;
+		padding-top: 1.75rem;
 	}
 
 	.hero-copy {
@@ -473,28 +426,28 @@ const featuredProjects = rawProjects.map((project) => {
 
 	h2 {
 		margin-bottom: 1rem;
-		font-size: clamp(2.4rem, 4vw, 4.2rem);
-		line-height: 0.95;
+		font-size: clamp(2rem, 10vw, 3.5rem);
+		line-height: 0.98;
 		letter-spacing: -0.04em;
 	}
 
 	h3 {
 		margin-bottom: 0.75rem;
-		font-size: 1.65rem;
+		font-size: 1.4rem;
 		line-height: 1;
 	}
 
 	p,
 	li,
 	dd {
-		font-size: 1.02rem;
-		line-height: 1.75;
+		font-size: 0.98rem;
+		line-height: 1.68;
 		color: var(--muted);
 	}
 
 	.intro {
-		max-width: 40rem;
-		font-size: 1.28rem;
+		max-width: 30rem;
+		font-size: 1.05rem;
 		color: var(--text);
 	}
 
@@ -506,18 +459,19 @@ const featuredProjects = rawProjects.map((project) => {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1rem;
-		margin-top: 2.2rem;
+		margin-top: 1.5rem;
 	}
 
 	.button {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.95rem 1.55rem;
+		width: 100%;
+		padding: 0.95rem 1.2rem;
 		border-radius: 999px;
 		border: 1px solid var(--line);
 		text-decoration: none;
-		font-size: 0.92rem;
+		font-size: 0.84rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -547,6 +501,7 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.hero-aside {
 		padding: 0;
+		order: -1;
 	}
 
 	.portrait-card {
@@ -618,19 +573,19 @@ const featuredProjects = rawProjects.map((project) => {
 	}
 
 	.section {
-		padding: 5rem 0;
+		padding: 3.5rem 0;
 	}
 
 	.section-heading {
 		max-width: 42rem;
-		margin-bottom: 2.4rem;
+		margin-bottom: 1.8rem;
 	}
 
 	.section-heading-wide {
 		max-width: none;
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
-		gap: 2rem;
+		grid-template-columns: 1fr;
+		gap: 1rem;
 		align-items: end;
 	}
 
@@ -640,16 +595,16 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.story-grid {
 		display: grid;
-		grid-template-columns: 1.15fr 1fr 1fr;
+		grid-template-columns: 1fr;
 		gap: 1rem;
 	}
 
 	.story-card,
 	.spotlight-card,
 	.contact-card {
-		padding: 1.6rem;
+		padding: 1.25rem;
 		border: 1px solid rgba(0, 0, 0, 0.12);
-		border-radius: 1.8rem;
+		border-radius: 1.4rem;
 		background: rgba(255, 255, 255, 0.8);
 		box-shadow: 0 18px 42px rgba(0, 0, 0, 0.05);
 	}
@@ -662,17 +617,17 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.feature-frame {
 		display: grid;
-		grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1.2fr);
-		gap: 1.2rem;
-		padding: 1.2rem;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		padding: 1rem;
 		border: 1px solid rgba(0, 0, 0, 0.12);
-		border-radius: 2rem;
+		border-radius: 1.5rem;
 		background: rgba(255, 255, 255, 0.74);
 		box-shadow: 0 24px 64px rgba(0, 0, 0, 0.06);
 	}
 
 	.feature-copy {
-		padding: 1.5rem;
+		padding: 1rem;
 		display: grid;
 		align-content: center;
 	}
@@ -684,11 +639,11 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.feature-image {
 		width: 100%;
-		min-height: 26rem;
+		min-height: 18rem;
 		height: 100%;
 		object-fit: cover;
 		display: block;
-		border-radius: 1.5rem;
+		border-radius: 1.1rem;
 	}
 
 	.text-link,
@@ -705,35 +660,50 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.project-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.2rem;
+		grid-template-columns: 1fr;
+		gap: 1rem;
 	}
 
 	.project-card {
 		display: grid;
 		overflow: hidden;
 		border: 1px solid rgba(0, 0, 0, 0.12);
-		border-radius: 2rem;
+		border-radius: 0;
 		background: rgba(255, 255, 255, 0.84);
 		box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
 	}
 
 	.project-card-tall .project-media {
-		min-height: 22rem;
+		min-height: 0;
 	}
 
 	.project-media {
 		position: relative;
-		min-height: 18rem;
+		aspect-ratio: 16 / 9;
+		min-height: 0;
+		height: auto;
+		overflow: hidden;
 	}
 
 	.project-image {
+		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		display: block;
 		background: #d9d9d9;
 		filter: grayscale(1);
+	}
+
+	.project-video {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+		background: #111111;
 	}
 
 	.project-image.fallback {
@@ -749,20 +719,12 @@ const featuredProjects = rawProjects.map((project) => {
 		text-transform: uppercase;
 	}
 
-	.project-overlay {
-		position: absolute;
-		inset: auto 0 0;
-		padding: 2rem 1.4rem 1.3rem;
-		background: linear-gradient(180deg, transparent, rgba(15, 16, 18, 0.85));
-	}
-
-	.project-overlay h3,
-	.project-overlay .project-kicker {
-		color: #fff5eb;
+	.project-kicker-body {
+		margin-bottom: 0.55rem;
 	}
 
 	.project-body {
-		padding: 1.4rem;
+		padding: 1.1rem;
 	}
 
 	.project-details {
@@ -785,9 +747,9 @@ const featuredProjects = rawProjects.map((project) => {
 	}
 
 	.spotlight-shell {
-		padding: 2rem;
+		padding: 1.2rem;
 		border: 1px solid rgba(0, 0, 0, 0.12);
-		border-radius: 2rem;
+		border-radius: 1.5rem;
 		background:
 			linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0)),
 			rgba(255, 255, 255, 0.76);
@@ -795,7 +757,7 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.spotlight-grid {
 		display: grid;
-		grid-template-columns: 1.2fr 1fr;
+		grid-template-columns: 1fr;
 		gap: 1rem;
 	}
 
@@ -805,78 +767,194 @@ const featuredProjects = rawProjects.map((project) => {
 
 	.contact-shell {
 		display: grid;
-		grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
-		gap: 1.2rem;
+		grid-template-columns: 1fr;
+		gap: 1rem;
 		align-items: stretch;
 	}
 
 	.contact-copy {
-		padding-right: 1rem;
+		padding-right: 0;
 	}
 
 	.contact-card {
 		display: grid;
 		align-content: center;
 		gap: 0.45rem;
-		min-height: 18rem;
+		min-height: 0;
 		background:
 			linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(233, 233, 233, 0.86)),
 			rgba(255, 255, 255, 0.8);
 	}
 
 	.contact-card a {
-		font-size: clamp(1.2rem, 2vw, 1.8rem);
+		font-size: clamp(1.05rem, 5vw, 1.5rem);
 		line-height: 1.2;
 		color: var(--text);
 		word-break: break-word;
 	}
 
-	@media (max-width: 1100px) {
-		.hero-grid,
-		.story-grid,
-		.section-heading-wide,
-		.feature-frame,
-		.spotlight-grid,
-		.contact-shell {
-			grid-template-columns: 1fr;
-		}
-
-		h1 {
-			max-width: none;
-		}
-	}
-
-	@media (max-width: 760px) {
+	@media (min-width: 700px) {
 		.page {
-			width: min(100% - 1.25rem, 44rem);
-			padding-top: 0.5rem;
-		}
-
-		.nav {
-			flex-direction: column;
-			align-items: flex-start;
-			padding-bottom: 1rem;
-		}
-
-		.links {
-			gap: 0.9rem;
+			width: min(100% - 2rem, 84rem);
+			padding-top: 0.9rem;
 		}
 
 		.hero-grid {
+			gap: 2rem;
 			padding-top: 2.5rem;
 		}
 
-		.project-grid {
-			grid-template-columns: 1fr;
+		.button {
+			width: auto;
+			padding-inline: 1.55rem;
+		}
+
+		.nav {
+			padding-inline: 1rem;
+			padding-bottom: 0.85rem;
+		}
+
+		.links {
+			gap: 1.1rem;
 		}
 
 		.section {
-			padding: 4rem 0;
+			padding: 4.5rem 0;
 		}
 
-		.feature-copy,
+		.section-heading {
+			margin-bottom: 2.2rem;
+		}
+
 		.spotlight-shell {
+			padding: 1.6rem;
+		}
+	}
+
+	@media (min-width: 920px) {
+		.hero {
+			min-height: 100vh;
+			padding-bottom: 4rem;
+		}
+
+		.nav {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding-top: 0.85rem;
+			padding-bottom: 1rem;
+			padding-inline: 1.5rem;
+		}
+
+		.hero-grid {
+			grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+			gap: 2.5rem;
+			padding-top: 3.5rem;
+		}
+
+		.hero-aside {
+			order: 0;
+		}
+
+		.intro {
+			max-width: 40rem;
+			font-size: 1.18rem;
+		}
+
+		h2 {
+			font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+		}
+
+		h3 {
+			font-size: 1.6rem;
+		}
+
+		p,
+		li,
+		dd {
+			font-size: 1.02rem;
+		}
+
+		.section-heading-wide {
+			grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
+			gap: 2rem;
+		}
+
+		.project-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1.2rem;
+		}
+
+		.project-card-tall .project-media {
+			min-height: 0;
+		}
+
+		.project-media {
+			min-height: 0;
+			height: auto;
+		}
+
+		.spotlight-grid {
+			grid-template-columns: 1.2fr 1fr;
+		}
+
+		.contact-shell {
+			grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+			gap: 1.2rem;
+		}
+
+		.contact-copy {
+			padding-right: 1rem;
+		}
+
+		.contact-card {
+			min-height: 18rem;
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.8fr);
+		}
+
+		.story-grid {
+			grid-template-columns: 1.15fr 1fr 1fr;
+		}
+
+		.feature-frame {
+			grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1.2fr);
+			gap: 1.2rem;
 			padding: 1.2rem;
+			border-radius: 2rem;
+		}
+
+		.feature-copy {
+			padding: 1.5rem;
+		}
+
+		.feature-image {
+			min-height: 26rem;
+			border-radius: 1.5rem;
+		}
+
+		.story-card,
+		.spotlight-card,
+		.contact-card {
+			padding: 1.6rem;
+			border-radius: 1.8rem;
+		}
+
+		.project-card {
+			border-radius: 0;
+		}
+
+		.project-body {
+			padding: 1.4rem;
+		}
+
+		.spotlight-shell {
+			padding: 2rem;
+			border-radius: 0;
 		}
 	}
 </style>
