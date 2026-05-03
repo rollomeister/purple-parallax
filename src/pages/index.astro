@@ -31,6 +31,12 @@ const rawProjects = [
 		production: "Ruudu Produtsendid",
 		role: "Head costume designer",
 		link: "https://www.youtube.com/watch?v=MywN9DJHdA8",
+		links: [
+			"https://www.youtube.com/watch?v=MywN9DJHdA8",
+			"https://www.youtube.com/watch?v=JXtTtVna2RA",
+			"https://www.youtube.com/watch?v=zPrjxfmOFrg",
+			"https://www.youtube.com/watch?v=5nX6NZZq66E",
+		],
 	},
 	{
 		title: "The Agency",
@@ -123,16 +129,20 @@ const rawProjects = [
 ];
 
 const featuredProjects = rawProjects.map((project) => {
-	const embed =
-		project.link.includes("youtube.com") || project.link.includes("youtu.be")
-			? getYouTubeEmbed(project.link)
-			: project.link.includes("vimeo.com")
-				? getVimeoEmbed(project.link)
-				: null;
+	const embeds = (project.links ?? [project.link])
+		.map((link) =>
+			link.includes("youtube.com") || link.includes("youtu.be")
+				? getYouTubeEmbed(link)
+				: link.includes("vimeo.com")
+					? getVimeoEmbed(link)
+					: null,
+		)
+		.filter((embed): embed is string => Boolean(embed));
 
 	return {
 		...project,
-		embed,
+		embed: embeds[0] ?? null,
+		embeds,
 	};
 });
 ---
@@ -187,12 +197,10 @@ const featuredProjects = rawProjects.map((project) => {
 		<section class="section" id="work">
 			<div class="section-heading section-heading-wide">
 				<div>
-					<p class="section-label">Costume Work</p>
-					<h2>Selected projects across television, film, and music video.</h2>
+					<h2>Costume Work</h2>
 				</div>
 				<p class="section-intro">
-					A working portfolio of productions, collaborators, and costume roles drawn
-					from the original document and translated into a more visual archive.
+
 				</p>
 			</div>
 
@@ -202,7 +210,21 @@ const featuredProjects = rawProjects.map((project) => {
 						<article class:list={["project-card", index % 5 === 0 && "project-card-tall"]}>
 							<div class="project-media">
 								{
-									project.embed ? (
+									project.embeds.length > 1 ? (
+										<div class="project-video-grid">
+											{project.embeds.map((embed, embedIndex) => (
+												<iframe
+													class="project-video"
+													src={embed}
+													title={`${project.title} trailer ${embedIndex + 1}`}
+													loading="lazy"
+													allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+													allowfullscreen
+													referrerpolicy="strict-origin-when-cross-origin"
+												/>
+											))}
+										</div>
+									) : project.embed ? (
 										<iframe
 											class="project-video"
 											src={project.embed}
@@ -251,8 +273,8 @@ const featuredProjects = rawProjects.map((project) => {
 		<section class="section spotlight">
 			<div class="spotlight-shell">
 				<div class="section-heading">
-					<p class="section-label">Commercial Work</p>
-					<h2>Brand-facing styling and costume for Estonian and international productions.</h2>
+					<p class="section-label">Costume work for commercials</p>
+
 				</div>
 				<div class="spotlight-grid">
 					<div class="spotlight-card">
@@ -276,11 +298,9 @@ const featuredProjects = rawProjects.map((project) => {
 		<section class="section contact-section" id="contact">
 			<div class="contact-shell">
 				<div class="contact-copy">
-					<p class="section-label">Contact</p>
-					<h2>Available for productions, collaborations, and creative commissions.</h2>
+					<h2>Contact</h2>
 					<p>
-						Costume designer based in Tallinn, Estonia. For film, television,
-						commercial, and editorial enquiries, reach out directly.
+						Available for productions, collaborations, and creative commissions.
 					</p>
 				</div>
 
@@ -319,10 +339,10 @@ const featuredProjects = rawProjects.map((project) => {
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: 0.5rem;
-		width: 100vw;
+		width: 100dvw;
 		margin-top: 0;
-		margin-left: calc(50% - 50vw);
-		margin-right: calc(50% - 50vw);
+		margin-left: calc(50% - 50dvw);
+		margin-right: calc(50% - 50dvw);
 		padding: 0.45rem 0 0.6rem;
 		padding-inline: 0.625rem;
 		background: var(--bg);
@@ -341,10 +361,13 @@ const featuredProjects = rawProjects.map((project) => {
 	.brand {
 		display: inline-flex;
 		align-items: center;
+		min-height: 2.25rem;
 		gap: 0.85rem;
+		padding-left: 0.5rem;
 		color: #111111;
 		font-size: 1.35rem;
 		font-weight: 700;
+		line-height: 1;
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
 	}
@@ -365,10 +388,16 @@ const featuredProjects = rawProjects.map((project) => {
 	.links {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 0.75rem;
+		padding-right: 0.5rem;
 	}
 
 	.links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.25rem;
+		line-height: 1;
 		color: rgba(17, 17, 17, 0.76);
 		font-size: 0.76rem;
 		font-weight: 600;
@@ -706,6 +735,24 @@ const featuredProjects = rawProjects.map((project) => {
 		background: #111111;
 	}
 
+	.project-video-grid {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-rows: repeat(2, minmax(0, 1fr));
+		gap: 0.2rem;
+		padding: 0.2rem;
+		background: #111111;
+	}
+
+	.project-video-grid .project-video {
+		position: relative;
+		inset: auto;
+		width: 100%;
+		height: 100%;
+	}
+
 	.project-image.fallback {
 		display: grid;
 		place-items: end start;
@@ -816,6 +863,7 @@ const featuredProjects = rawProjects.map((project) => {
 
 		.links {
 			gap: 1.1rem;
+			padding-right: 1rem;
 		}
 
 		.section {
@@ -832,17 +880,25 @@ const featuredProjects = rawProjects.map((project) => {
 	}
 
 	@media (min-width: 920px) {
+		.page {
+			padding-top: 0;
+		}
+
 		.hero {
 			min-height: 100vh;
 			padding-bottom: 4rem;
+		}
+
+		.brand {
+			padding-left: 1rem;
 		}
 
 		.nav {
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
-			padding-top: 0.85rem;
-			padding-bottom: 1rem;
+			padding-top: 0.7rem;
+			padding-bottom: 0.95rem;
 			padding-inline: 1.5rem;
 		}
 
@@ -862,7 +918,7 @@ const featuredProjects = rawProjects.map((project) => {
 		}
 
 		h2 {
-			font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+			font-size: clamp(2rem, 4.5vw, 4.2rem);
 		}
 
 		h3 {

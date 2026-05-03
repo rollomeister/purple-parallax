@@ -56,11 +56,33 @@ const {
 
 	html {
 		scroll-behavior: smooth;
+		scrollbar-color: #6a6a6a #111111;
+		scrollbar-width: auto;
+		overflow-x: clip;
+	}
+
+	html::-webkit-scrollbar {
+		width: 1rem;
+	}
+
+	html::-webkit-scrollbar-track {
+		background: #111111;
+	}
+
+	html::-webkit-scrollbar-thumb {
+		background: #6a6a6a;
+		border: 2px solid #111111;
+		border-radius: 999px;
+	}
+
+	html::-webkit-scrollbar-thumb:hover {
+		background: #7a7a7a;
 	}
 
 	body {
 		margin: 0;
 		min-width: 320px;
+		overflow-x: clip;
 		font-family: var(--font-body);
 		background:
 			radial-gradient(circle at top left, rgba(0, 0, 0, 0.04), transparent 26rem),
