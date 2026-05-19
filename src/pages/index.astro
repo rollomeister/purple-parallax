@@ -23,6 +23,19 @@ const getVimeoEmbed = (url: string) => {
 	}
 };
 
+const getFacebookEmbed = (url: string) => {
+	try {
+		const parsed = new URL(url);
+		if (!parsed.hostname.includes("facebook.com")) {
+			return null;
+		}
+
+		return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=1280`;
+	} catch {
+		return null;
+	}
+};
+
 const rawProjects = [
 	{
 		title: "Papsid",
@@ -76,7 +89,7 @@ const rawProjects = [
 		meta: "Estonian short film, 2023",
 		production: "BFM School",
 		role: "Costume designer",
-		link: "#",
+		link: "https://www.youtube.com/watch?v=6ugsw36XGwM",
 	},
 	{
 		title: "Soo",
@@ -116,7 +129,7 @@ const rawProjects = [
 		meta: "Finnish TV series, 2021",
 		production: "Moskito Television, Stellar",
 		role: "Costume shopper",
-		link: "#",
+		link: "https://vimeo.com/793410788?fl=pl&fe=sh",
 	},
 	{
 		title: "Tulejoonel",
@@ -135,6 +148,8 @@ const featuredProjects = rawProjects.map((project) => {
 				? getYouTubeEmbed(link)
 				: link.includes("vimeo.com")
 					? getVimeoEmbed(link)
+					: link.includes("facebook.com")
+						? getFacebookEmbed(link)
 					: null,
 		)
 		.filter((embed): embed is string => Boolean(embed));
@@ -167,10 +182,10 @@ const featuredProjects = rawProjects.map((project) => {
 			<div class="hero-grid">
 				<div class="hero-copy">
 					<p class="intro">
-						TRIIM KURBAS also known as Triim Peetsalu before 2025 - is a COSTUME DESIGNER working on TV-series, Film, commercials and photoshoots.
+						TRIIM KURBAS also known as Triim Peetsalu before 2025 - is a COSTUME DESIGNER working on TV-series, film, commercials and photoshoots.
 					</p>
 					<p class="intro">
-						My background is Estonian Art Academy Jewellry and Production Design. Before costume I was working in jewellery.
+						My background is Estonian Art Academy Jewellery and Production Design. Before costume I was working in jewellery.
 					</p>
 					<p class="intro">
 						Here is a list of my work done for TV and Film
@@ -270,30 +285,23 @@ const featuredProjects = rawProjects.map((project) => {
 			</div>
 		</section>
 
+		<!--
 		<section class="section spotlight">
 			<div class="spotlight-shell">
-				<div class="section-heading">
-					<p class="section-label">Costume work for commercials</p>
-
+				<div class="section-heading section-heading-wide">
+					<p class="section-label">Estonian and International TV Commercial projects  2017-2020</p>
 				</div>
 				<div class="spotlight-grid">
 					<div class="spotlight-card">
 						<p>
-							The original plan lists 13 commercial projects between 2017 and 2020,
-							with work connected to Coca-Cola, Sony, Samsung, Expert, DNA, Elisa Eesti,
-							and Eesti Pagar.
-						</p>
-					</div>
-					<div class="spotlight-card muted">
-						<p>
-							Production partners noted in the source file include Nafta Films, Get
-							Shot Films, and Allfilm. This section can grow into a campaign archive,
-							client strip, or a dedicated commercial portfolio page later.
+							13 different projects such as: Coca-Cola, SONY, Samsung, Expert, DNA, Elisa Eesti, Eesti Pagar etc.
+							With productions: Nafta Films, Get Shot Films, Allfilm Proction
 						</p>
 					</div>
 				</div>
 			</div>
 		</section>
+		-->
 
 		<section class="section contact-section" id="contact">
 			<div class="contact-shell">
@@ -638,6 +646,11 @@ const featuredProjects = rawProjects.map((project) => {
 		box-shadow: 0 18px 42px rgba(0, 0, 0, 0.05);
 	}
 
+	.contact-section {
+		padding-top: 2.75rem;
+		border-top: 1px solid rgba(0, 0, 0, 0.12);
+	}
+
 	.story-card.large {
 		background:
 			linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(236, 236, 236, 0.8)),
@@ -794,18 +807,17 @@ const featuredProjects = rawProjects.map((project) => {
 	}
 
 	.spotlight-shell {
-		padding: 1.2rem;
-		border: 1px solid rgba(0, 0, 0, 0.12);
-		border-radius: 1.5rem;
-		background:
-			linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0)),
-			rgba(255, 255, 255, 0.76);
+		width: 100%;
 	}
 
 	.spotlight-grid {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 1rem;
+	}
+
+	.spotlight-card {
+		width: 100%;
 	}
 
 	.spotlight-card.muted {
@@ -875,7 +887,7 @@ const featuredProjects = rawProjects.map((project) => {
 		}
 
 		.spotlight-shell {
-			padding: 1.6rem;
+			width: 100%;
 		}
 	}
 
@@ -1009,8 +1021,7 @@ const featuredProjects = rawProjects.map((project) => {
 		}
 
 		.spotlight-shell {
-			padding: 2rem;
-			border-radius: 0;
+			width: 100%;
 		}
 	}
 </style>
