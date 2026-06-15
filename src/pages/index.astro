@@ -213,7 +213,7 @@ import BackToTop from "../components/BackToTop.astro";
 	.page {
 		width: min(100% - 1.25rem, 44rem);
 		margin: 0 auto;
-		padding: 0.5rem 0 4rem;
+		padding: 0.5rem 0 0;
 		position: relative;
 	}
 
@@ -679,7 +679,8 @@ import BackToTop from "../components/BackToTop.astro";
 		contain-intrinsic-size: 36rem;
 		border: 1px solid rgba(0, 0, 0, 0.12);
 		border-radius: 0;
-		background: rgba(255, 255, 255, 0.84);
+		background: var(--surface);
+		color: var(--text);
 		box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
 	}
 
@@ -754,6 +755,18 @@ import BackToTop from "../components/BackToTop.astro";
 
 	.project-body {
 		padding: 1.1rem;
+		background: var(--surface);
+		color: var(--text);
+	}
+
+	.project-body p,
+	.project-body dd {
+		color: var(--muted-strong);
+	}
+
+	.project-body h3,
+	.project-body dt {
+		color: var(--text);
 	}
 
 	.project-details {
@@ -837,7 +850,7 @@ import BackToTop from "../components/BackToTop.astro";
 	@media (min-width: 700px) {
 		.page {
 			width: min(100% - 2rem, 84rem);
-			padding-top: 0.9rem;
+			padding: 0.9rem 0 4rem;
 		}
 
 		.hero-grid {
