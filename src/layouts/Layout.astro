@@ -1,7 +1,5 @@
 ---
 import "../styles/global.css";
-import "../components/BackToTop.astro";
-import BackToTop from "../components/BackToTop.astro";
 
 interface Props {
 	title?: string;
@@ -18,11 +16,11 @@ const {
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Pliant:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
 		<link rel="icon" type="image/svg+xml" href="/favicon.jpg" />
@@ -32,7 +30,6 @@ const {
 	</head>
 	<body>
 		<slot />
-		<BackToTop />
 	</body>
 </html>
 
@@ -51,8 +48,8 @@ const {
 		--accent-strong: #000000;
 		--shadow: rgba(0, 0, 0, 0.08);
 		--font-nav: "Quicksand", "Segoe UI", sans-serif;
-		--font-display: "Quicksand", "Segoe UI", sans-serif;
-		--font-body: "Quicksand", "Segoe UI", sans-serif;
+		--font-display: "Pliant", "Segoe UI", sans-serif;
+		--font-body: "Raleway", "Segoe UI", sans-serif;
 	}
 
 	* {
@@ -87,12 +84,19 @@ const {
 	body {
 		position: relative;
 		margin: 0;
-		min-width: 320px;
 		overflow-x: clip;
 		font-family: var(--font-body);
 		background:
-			radial-gradient(circle at top left, rgba(0, 0, 0, 0.04), transparent 26rem),
-			radial-gradient(circle at 85% 18%, rgba(0, 0, 0, 0.03), transparent 22rem),
+			radial-gradient(
+				circle at top left,
+				rgba(0, 0, 0, 0.04),
+				transparent 26rem
+			),
+			radial-gradient(
+				circle at 85% 18%,
+				rgba(0, 0, 0, 0.03),
+				transparent 22rem
+			),
 			var(--bg);
 		color: var(--text);
 	}
@@ -106,7 +110,11 @@ const {
 			linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
 			linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
 		background-size: 4.25rem 4.25rem;
-		mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+		mask-image: radial-gradient(
+			circle at center,
+			black 35%,
+			transparent 85%
+		);
 		opacity: 0.3;
 	}
 
