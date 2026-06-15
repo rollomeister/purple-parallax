@@ -27,7 +27,7 @@ import BackToTop from "../components/BackToTop.astro";
 		</nav>
 			<div class="hero-grid">
 				<div class="hero-copy">
-					<h1 class="hero-title text-center py-5">Crafting wardrobes to bring your vision to life</h1>
+					<h1 class="hero-title text-center py-5">Designing costumes that bring characters to life</h1>
 					<div class="space-y-3">
 						<p class="intro">
 							TRIIM KURBAS also known as Triim Peetsalu before 2025 - is a COSTUME DESIGNER working on TV-series, films, commercials and photoshoots.
@@ -233,8 +233,8 @@ import BackToTop from "../components/BackToTop.astro";
 
 	.hero {
 		position: relative;
-		--hero-image-overlap: clamp(3.75rem, 16vw, 6.5rem);
-		padding-bottom: 2.25rem;
+		--hero-image-overlap: clamp(12rem, 60vw, 16rem);
+		padding-bottom: 0.75rem;
 		min-height: auto;
 		display: grid;
 		align-content: start;
@@ -493,7 +493,7 @@ import BackToTop from "../components/BackToTop.astro";
 	}
 
 	.portrait-card {
-		aspect-ratio: 4 / 3;
+		aspect-ratio: 2 / 3;
 		position: relative;
 		padding: 0;
 		border: 0;
@@ -525,8 +525,10 @@ import BackToTop from "../components/BackToTop.astro";
 		pointer-events: none;
 		background: linear-gradient(
 			to bottom,
-			transparent 48%,
-			color-mix(in srgb, var(--bg) 15%, transparent) 66%,
+			transparent 34%,
+			color-mix(in srgb, var(--bg) 18%, transparent) 48%,
+			color-mix(in srgb, var(--bg) 68%, transparent) 66%,
+			color-mix(in srgb, var(--bg) 94%, transparent) 82%,
 			var(--bg) 100%
 		);
 	}
@@ -585,7 +587,7 @@ import BackToTop from "../components/BackToTop.astro";
 	}
 
 	#work.section {
-		padding-top: 8rem;
+		padding-top: 1.25rem;
 	}
 
 	.section-heading {
@@ -857,6 +859,10 @@ import BackToTop from "../components/BackToTop.astro";
 			padding: 0.9rem 0 4rem;
 		}
 
+		.hero {
+			--hero-image-overlap: clamp(6.5rem, 18vw, 9rem);
+		}
+
 		.hero-grid {
 			gap: 2rem;
 			padding-top: 0;
@@ -887,6 +893,7 @@ import BackToTop from "../components/BackToTop.astro";
 		}
 
 		.portrait-card {
+			aspect-ratio: 16 / 10;
 			width: 100%;
 			margin-inline: 0;
 		}
