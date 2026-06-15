@@ -10,6 +10,46 @@ const {
 	title = "Triim Kurbas Portfolio",
 	description = "A simple portfolio website built with Astro.",
 } = Astro.props;
+
+const siteUrl = Astro.site ?? new URL("https://triimkurbas.com");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const imageUrl = new URL("/triin-portrait.jpg", siteUrl).toString();
+const keywords = [
+	"Triim Kurbas",
+	"Triin Peetsalu",
+	"costume designer",
+	"costume artist",
+	"film costume designer",
+	"TV costume designer",
+	"commercial costume designer",
+	"Estonia costume designer",
+	"Tallinn costume designer",
+].join(", ");
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: "Triim Kurbas",
+	alternateName: ["Triin Peetsalu"],
+	jobTitle: "Costume Designer",
+	description:
+		"Estonia-based costume designer Triim Kurbas, also known as Triin Peetsalu before 2025, working on film, television, commercials, and photoshoots.",
+	url: canonicalUrl,
+	image: imageUrl,
+	email: "mailto:triim.kurbas@gmail.com",
+	telephone: "+37253439902",
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Tallinn",
+		addressCountry: "EE",
+	},
+	knowsAbout: [
+		"Costume design",
+		"Film costume work",
+		"Television costume work",
+		"Commercial productions",
+		"Photoshoot styling",
+	],
+};
 ---
 
 <!doctype html>
@@ -20,6 +60,20 @@ const {
 		<meta name="theme-color" content="#f3f3f3" />
 		<meta name="color-scheme" content="light" />
 		<meta name="supported-color-schemes" content="light" />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="Triim Kurbas" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Triim Kurbas" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:alt" content="Portrait of costume designer Triim Kurbas" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageUrl} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -30,6 +84,7 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</head>
 	<body style="background-color: #f3f3f3;">
 		<slot />

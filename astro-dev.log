@@ -18,3 +18,21 @@
 [2m00:35:29[22m [34m[vite][39m [32m✨ new dependencies optimized: [33mastro/runtime/client/dev-toolbar/entrypoint.js[32m[39m
 [2m00:35:29[22m [34m[vite][39m [32m✨ optimized dependencies changed. reloading[39m
 [2m00:35:57[22m [34m[200][39m / [2m3ms[22m
+[2m00:41:40[22m [34m[200][39m / [2m6ms[22m
+[2m00:42:22[22m [34m[200][39m / [2m3ms[22m
+[2m00:43:12[22m [34m[watch][39m /src/styles/global.css
+[2m00:43:12[22m [34m[200][39m / [2m9ms[22m
+[2m00:43:45[22m [34m[watch][39m src/layouts/Layout.astro
+[2m00:43:45[22m [34m[200][39m / [2m8ms[22m
+[2m00:43:49[22m [34m[watch][39m /src/styles/global.css
+[2m00:43:49[22m [34m[200][39m / [2m10ms[22m
+[2m00:43:54[22m [34m[200][39m / [2m3ms[22m
+[2m00:44:03[22m [34m[200][39m / [2m3ms[22m
+[2m00:46:17[22m [34m[watch][39m src/layouts/Layout.astro
+[2m00:47:27[22m [34m[200][39m / [2m7ms[22m
+[2m00:55:49[22m [34m[watch][39m src/layouts/Layout.astro
+[2m00:55:49[22m [34m[200][39m / [2m11ms[22m
+[2m00:56:00[22m [34m[watch][39m /src/styles/global.css
+[2m00:56:00[22m [34m[200][39m / [2m12ms[22m
+[2m00:59:28[22m [34m[watch][39m src/layouts/Layout.astro
+[2m01:00:14[22m [34m[200][39m / [2m11ms[22m

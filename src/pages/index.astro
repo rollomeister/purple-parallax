@@ -8,8 +8,8 @@ import BackToTop from "../components/BackToTop.astro";
 ---
 
 <Layout
-	title="Triim Kurbas | Costume Artist"
-	description="Editorial-style portfolio for costume artist Triim Kurbas, featuring film, television, and commercial work."
+	title="Triim Kurbas | Costume Designer for Film, TV & Commercials"
+	description="Portfolio of Estonia-based costume designer Triim Kurbas, also known as Triin Peetsalu before 2025, featuring costume work for film, television, commercials, and photoshoots."
 >
 	<main class="page">
 		<header class="hero" id="home">
@@ -234,17 +234,10 @@ import BackToTop from "../components/BackToTop.astro";
 	.hero {
 		position: relative;
 		--hero-image-overlap: clamp(12rem, 60vw, 16rem);
-		--hero-fade-color: var(--bg);
 		padding-bottom: 0.75rem;
 		min-height: auto;
 		display: grid;
 		align-content: start;
-	}
-
-	:global(html[data-theme="dark"]) .hero,
-	:global(body[data-theme="dark"]) .hero,
-	:global(.dark) .hero {
-		--hero-fade-color: #111111;
 	}
 
 	.nav {
@@ -522,22 +515,24 @@ import BackToTop from "../components/BackToTop.astro";
 		max-height: none;
 		object-fit: cover;
 		object-position: center top;
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			black 34%,
+			rgba(0, 0, 0, 0.82) 48%,
+			rgba(0, 0, 0, 0.32) 72%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			to bottom,
+			black 34%,
+			rgba(0, 0, 0, 0.82) 48%,
+			rgba(0, 0, 0, 0.32) 72%,
+			transparent 100%
+		);
 	}
 
 	.portrait-card::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		pointer-events: none;
-		background: linear-gradient(
-			to bottom,
-			transparent 34%,
-			color-mix(in srgb, var(--hero-fade-color) 18%, transparent) 48%,
-			color-mix(in srgb, var(--hero-fade-color) 68%, transparent) 66%,
-			color-mix(in srgb, var(--hero-fade-color) 94%, transparent) 82%,
-			var(--hero-fade-color) 100%
-		);
+		content: none;
 	}
 
 	.portrait-copy {
@@ -1030,6 +1025,8 @@ import BackToTop from "../components/BackToTop.astro";
 			height: 100%;
 			object-fit: cover;
 			object-position: center bottom;
+			-webkit-mask-image: none;
+			mask-image: none;
 		}
 
 		.intro {
