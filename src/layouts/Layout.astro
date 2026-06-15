@@ -17,9 +17,9 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta content="#F3F3F3" data-react-helmet="true" name="theme-color" />
 		<meta name="color-scheme" content="light" />
 		<meta name="supported-color-schemes" content="light" />
-		<meta name="theme-color" content="#f3f3f3" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -53,8 +53,8 @@ const {
 		--font-nav: "Quicksand", "Segoe UI", sans-serif;
 		--font-display: "Pliant", "Segoe UI", sans-serif;
 		--font-body: "Raleway", "Segoe UI", sans-serif;
-		background-color: #f3f3f3;
-		background: #f3f3f3;
+		background-color: var(--bg);
+		background: var(--bg);
 	}
 
 	* {
@@ -63,9 +63,9 @@ const {
 
 	html {
 		color-scheme: only light;
-		min-height: 100vh;
-		background-color: #f3f3f3;
-		background: #f3f3f3;
+		min-height: 100%;
+		background-color: var(--bg);
+		background: var(--bg);
 		scroll-behavior: smooth;
 		scrollbar-color: #6a6a6a #111111;
 		scrollbar-width: auto;
@@ -93,10 +93,10 @@ const {
 	body {
 		position: relative;
 		margin: 0;
-		min-height: 100vh;
+		min-height: 100%;
 		overflow-x: clip;
 		font-family: var(--font-body);
-		background-color: #f3f3f3;
+		background-color: var(--bg);
 		background:
 			radial-gradient(
 				circle at top left,
@@ -110,15 +110,6 @@ const {
 			),
 			var(--bg);
 		color: var(--text);
-	}
-
-	body::after {
-		content: "";
-		position: fixed;
-		inset: 0;
-		z-index: -1;
-		pointer-events: none;
-		background: #f3f3f3;
 	}
 
 	body::before {
