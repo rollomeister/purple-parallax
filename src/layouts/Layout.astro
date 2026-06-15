@@ -18,6 +18,7 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="color-scheme" content="light" />
+		<meta name="theme-color" content="#f3f3f3" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -51,6 +52,7 @@ const {
 		--font-nav: "Quicksand", "Segoe UI", sans-serif;
 		--font-display: "Pliant", "Segoe UI", sans-serif;
 		--font-body: "Raleway", "Segoe UI", sans-serif;
+		background-color: var(--bg);
 		background: var(--bg);
 	}
 
@@ -60,6 +62,8 @@ const {
 
 	html {
 		color-scheme: only light;
+		min-height: 100%;
+		background-color: var(--bg);
 		background: var(--bg);
 		scroll-behavior: smooth;
 		scrollbar-color: #6a6a6a #111111;
@@ -88,8 +92,10 @@ const {
 	body {
 		position: relative;
 		margin: 0;
+		min-height: 100%;
 		overflow-x: clip;
 		font-family: var(--font-body);
+		background-color: var(--bg);
 		background:
 			radial-gradient(
 				circle at top left,
